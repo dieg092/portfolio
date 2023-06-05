@@ -5,12 +5,14 @@ import Darkmode from './darkmode'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import { useLayout } from './useLayout'
+import { useFeatureFlag } from '@groundcontrolsh/react'
 
 const name = 'Diego Barranco'
 export const siteTitle = 'Portfolio'
 
 export default function Layout({ children, home }) {
     const { theme, setTheme } = useLayout()
+    const isEnabled = useFeatureFlag("my-primerita-flag", {actors: ['Mederith']})
 
     return (
         <div className={'container mx-auto px-4'}>
@@ -60,7 +62,7 @@ export default function Layout({ children, home }) {
                 )}
             </header>
             <main>{children}</main>
-            <Darkmode theme={theme} setTheme={setTheme} />
+            {isEnabled && <Darkmode theme={theme} setTheme={setTheme} />}
 
             {!home && (
                 <div className={'container'}>
